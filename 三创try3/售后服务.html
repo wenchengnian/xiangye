@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农产品售后服务保障</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a8c3a 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(46, 125, 50, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header h1 i {
+            font-size: 2.8rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .service-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #4CAF50;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:nth-child(2) {
+            border-top-color: #2196F3;
+        }
+        
+        .service-card:nth-child(3) {
+            border-top-color: #FF9800;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: #2d5a27;
+            margin-bottom: 20px;
+        }
+        
+        .service-card:nth-child(2) .service-icon {
+            color: #2196F3;
+        }
+        
+        .service-card:nth-child(3) .service-icon {
+            color: #FF9800;
+        }
+        
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #2d5a27;
+        }
+        
+        .service-card:nth-child(2) h3 {
+            color: #2196F3;
+        }
+        
+        .service-card:nth-child(3) h3 {
+            color: #FF9800;
+        }
+        
+        .service-card p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .service-card:nth-child(2) .feature-list li:before {
+            color: #2196F3;
+        }
+        
+        .service-card:nth-child(3) .feature-list li:before {
+            color: #FF9800;
+        }
+        
+        .highlight {
+            background-color: #f1f8e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #8BC34A;
+        }
+        
+        .highlight p {
+            margin: 0;
+            font-weight: 600;
+            color: #2d5a27;
+        }
+        
+        .highlight i {
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+        
+        /* 客服对话区域 */
+        .customer-service {
+            background-color: white;
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-top: 30px;
+        }
+        
+        .customer-service h2 {
+            font-size: 2.2rem;
+            color: #2d5a27;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .customer-service h2 i {
+            font-size: 2.5rem;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fafafa;
+        }
+        
+        .chat-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.5;
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-top-left-radius: 5px;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: #4CAF50;
+            color: white;
+            border-top-right-radius: 5px;
+        }
+        
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            background-color: white;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .chat-input:focus {
+            border-color: #4CAF50;
+        }
+        
+        .send-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .send-btn:hover {
+            background-color: #3d8b40;
+        }
+        
+        .contact-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .contact-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f1f8e9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-card i {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .contact-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #2d5a27;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            .service-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .service-card {
+                padding: 20px;
+            }
+            
+            .customer-service {
+                padding: 20px;
+            }
+            
+            .contact-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-leaf"></i> 农产品售后保障</h1>
+        <p>我们致力于为您提供最优质、最新鲜的农产品，并承诺完善的售后服务，让您购物无忧</p>
+    </div>
+    
+    <div class="service-section">
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>售后保障</h3>
+            <p>我们为所有农产品提供全面的售后保障服务，确保您的权益得到最大程度的保护。</p>
+            <ul class="feature-list">
+                <li>7天无理由退货保障</li>
+                <li>30天质量保证期</li>
+                <li>全程物流追踪服务</li>
+                <li>农产品新鲜度承诺</li>
+            </ul>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>极速售后</h3>
+            <p>我们承诺在最短时间内响应您的售后需求，提供快速解决方案。</p>
+            <ul class="feature-list">
+                <li>15分钟内响应售后请求</li>
+                <li>24小时内处理完成</li>
+                <li>优先处理生鲜产品问题</li>
+                <li>多渠道接入（APP、微信、网站）</li>
+            </ul>
+        </div>
+        
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-truck-loading"></i>
+            </div>
+            <h3>货损与理赔</h3>
+            <p>我们建立了高效的货损投诉与理赔机制，特别关注果蔬产品的特殊性。</p>
+            <ul class="feature-list">
+                <li>快速响应货损投诉</li>
+                <li>即时退款或补发</li>
+                <li>专业客服团队跟进</li>
+            </ul>
+            <div class="highlight">
+                <p><i class="fas fa-star"></i> 创新对果蔬轻微瑕疵的快速理赔机制</p>
+                <p>针对果蔬在运输过程中可能出现的轻微压痕、表面斑点等不影响食用的问题，我们提供快速理赔通道，简化流程，快速解决。</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="customer-service">
+        <h2><i class="fas fa-comments"></i> 客服对话</h2>
+        <p>有任何关于农产品质量、配送、售后的问题，欢迎随时联系我们的客服团队，我们将竭诚为您服务。</p>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <i class="fas fa-headset"></i> 农产品客服助手
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    您好！欢迎来到农产品客服中心。我是您的专属客服助手，请问有什么可以帮您？
+                </div>
+                <div class="message bot-message">
+                    您可以咨询：<br>
+                    1. 农产品质量问题<br>
+                    2. 物流配送问题<br>
+                    3. 售后申请流程<br>
+                    4. 果蔬轻微瑕疵理赔<br>
+                    5. 其他问题
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="请输入您的问题...">
+                <button class="send-btn" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="contact-options">
+            <div class="contact-card">
+                <i class="fas fa-phone-alt"></i>
+                <h4>客服热线</h4>
+                <p>400-123-4567</p>
+                <p>7×24小时服务</p>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-envelope"></i>
+                <h4>电子邮件</h4>
+                <p>xiangye@outlook.com</p>
+                <p>12小时内回复</p>
+            </div>
+            <div class="contact-card">
+                <i class="fab fa-weixin"></i>
+                <h4>微信客服</h4>
+                <p>扫描二维码添加</p>
+                <p>在线即时沟通</p>
+            </div>
+            <div class="contact-card">
+                <i class="fas fa-clock"></i>
+                <h4>服务时间</h4>
+                <p>周一至周五</p>
+                <p>8:00-22:00</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2026 乡野优选-农产品推广平台 版权所有 | 致力于提供新鲜、健康、安全的农产品</p>
+        <p>售后保障承诺：极速响应 · 快速理赔 · 客户满意</p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            // 预定义客服回复
+            const botResponses = [
+                   "感谢您的咨询！对于农产品质量问题，我们提供7天无理由退换货服务，您可以上传照片给我们客服人员核实。",
+                   "关于物流配送问题，您可以通过订单号在我们的官网或APP上实时追踪物流信息。如遇到配送延迟，请联系我们的客服热线400-123-4567。",
+                "售后申请流程：1. 登录账号进入\"我的订单\" 2. 选择需要售后的订单 3. 填写问题描述并上传照片 4. 提交申请等待客服处理。",
+                "针对果蔬轻微瑕疵（如表面斑点、轻微压痕），我们提供快速理赔机制。您可以直接在订单页面申请\"轻微瑕疵理赔\"，我们会快速审核并给予补偿。",
+                "除了上述问题，您还可以咨询关于农产品储存方法、食用建议、有机认证等方面的问题，我们的专业团队会为您详细解答。",
+                "我们的极速售后承诺15分钟内响应，24小时内处理完成，确保您的问题得到及时解决。",
+                "对于生鲜农产品，我们建议收到后立即检查，如有问题请第一时间联系客服，我们会优先处理。"
+            ];
+            
+            // 发送消息函数
+            function sendMessage() {
+                const messageText = chatInput.value.trim();
+                
+                if (messageText === "") return;
+                
+                // 添加用户消息
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user-message';
+                userMessage.textContent = messageText;
+                chatMessages.appendChild(userMessage);
+                
+                // 清空输入框
+                chatInput.value = '';
+                
+                // 滚动到最新消息
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // 模拟机器人回复（延迟1秒）
+                setTimeout(() => {
+                    const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+                    
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot-message';
+                    botMessage.textContent = randomResponse;
+                    chatMessages.appendChild(botMessage);
+                    
+                    // 滚动到最新消息
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+            
+            // 发送按钮点击事件
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // 输入框回车事件
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // 添加一些初始的示例对话
+            setTimeout(() => {
+                const exampleQuestions = [
+                    "我的水果有一些轻微压痕，可以申请理赔吗？",
+                    "农产品收到后不新鲜怎么办？",
+                    "售后申请需要多长时间处理？"
+                ];
+                
+                exampleQuestions.forEach((question, index) => {
+                    setTimeout(() => {
+                        const questionElement = document.createElement('div');
+                        questionElement.className = 'message user-message';
+                        questionElement.textContent = question;
+                        chatMessages.appendChild(questionElement);
+                        
+                        // 滚动到最新消息
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        
+                        // 机器人回复
+                        setTimeout(() => {
+                            let response = "";
+                            if (index === 0) {
+                                response = "可以的！我们针对果蔬轻微瑕疵（如压痕、表面斑点等）有专门的快速理赔机制。您可以在订单页面直接申请'轻微瑕疵理赔'，上传照片后我们会快速审核，通过后会给您发放优惠券或部分退款补偿。";
+                            } else if (index === 1) {
+                                response = "如果收到的农产品不新鲜，请立即拍照并联系我们的客服。我们有'极速售后'承诺，会在15分钟内响应您的投诉，并根据情况为您办理退款或补发。对于生鲜产品，我们尤其重视新鲜度问题，会优先处理。";
+                            } else {
+                                response = "我们的售后申请处理速度很快：1. 一般问题24小时内处理完成；2. 生鲜产品问题12小时内处理；3. 轻微瑕疵理赔4小时内完成。我们承诺快速响应，确保您的问题得到及时解决。";
+                            }
+                            
+                            const botMessage = document.createElement('div');
+                            botMessage.className = 'message bot-message';
+                            botMessage.textContent = response;
+                            chatMessages.appendChild(botMessage);
+                            
+                            // 滚动到最新消息
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }, 1000);
+                    }, index * 4000);
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乡野优选-农产品推广平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;/* 整体背景色调整为浅灰色 */
+            color: #333;/* 文字颜色调整 */
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: rgb(122, 179, 141);/* logo色调 */
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 8px;
+            font-size: 24px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: rgb(156, 232, 181);/* logo上鼠标悬停色调 */
+        }
+        
+        .nav-links .more-category {
+            color: #888;
+        }
+        
+        .nav-links .more-category::after {
+            content: '▼';
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #555;
+            cursor: pointer;
+        }
+        
+        /* 主要内容区域 */
+       .hero {
+        position: relative;
+        overflow: hidden;
+        height: 500px;
+        color: lab(28.21% 26.51 -53.83 / 0.957);/* 标题区域文字颜色 */
+        padding: 80px 0;
+        text-align: center;
+        margin-bottom: 40px;
+        border-radius: 30px;
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%; /* 两张图片的宽度 */
+    height: 100%;
+    background:
+        linear-gradient(135deg, rgba(172, 229, 155, 0.8) 0%, rgba(91, 128, 67, 0.8) 100%),
+        url('images/微信图片_20260119192529_20_466.jpg') left top / 50% 100%,
+        url('images/微信图片_20260119192530_21_466.jpg') right top / 50% 100%;
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    animation: slideBackground 10s linear infinite alternate;
+    z-index: -1;
+}/* 上方两张背景滑动动画 */
+
+@keyframes slideBackground {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* 向左移动50%，显示第二张图片 */
+    }
+}
+@keyframes slideBackground {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);/* 标题阴影效果 */
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.95;
+        }
+        
+        .publish-btn {
+            background-color: rgb(132, 199, 150);/* 今日按钮背景色 */
+            color: #f8f8f8;/* 今日按钮汉字色调 */
+            border: none;
+            padding: 14px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);/* 按钮阴影效果 */
+        }
+        
+        .publish-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(5, 5, 5, 0.15);
+        }
+        
+/* 分类区域 */
+.categories {
+    display: flex;
+    justify-content: space-between; /* 改为两端对齐 */
+    margin-bottom: 20px;
+    flex-wrap: nowrap; /* 改为不换行 */
+    gap: 20px;
+    width: 100%;
+}
+
+.category-card {
+    background-color: rgb(195, 246, 252); /* 分类卡片背景色 */
+    border-radius: 15px;/* 圆角调整 */
+    padding: 30px 40px;/* 内边距调整 */
+    text-align: center;/* 文字居中 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);/* 卡片阴影效果 */
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1; /* 平均分配空间 */
+    min-width: 200px; /* 减小最小宽度 */
+    max-width: none; /* 移除最大宽度限制 */
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(62, 87, 112, 0.5);/* 悬停时阴影颜色调整 */
+}
+
+/* 乡野故事模块 */
+.countryside-story {
+    background-color: #fddd9e; /* 米黄色背景 */
+    border-radius: 15px;/* 圆角调整 */
+    padding: 30px 40px;/* 内边距调整 */
+    text-align: center; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex: 1; /* 平均分配空间 */
+    min-width: 200px; /* 减小最小宽度 */
+    max-width: none; /* 移除最大宽度限制 */
+    border-top: 5px solid #f0e67a; /* 顶部绿色装饰条 */
+}
+/* 会员福利卡片 */
+.category-card.member {
+    background: linear-gradient(to bottom right, #bf7dd0, #d83c7a);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-top: 5px solid #c91c7b;
+    margin-left:  0 auto 30px;
+
+}
+/* 售后保障卡片 */
+.category-card.after-sales {
+    background: linear-gradient(to bottom right, #d8edcb, #94e47b);
+    margin-bottom: 40px;
+    border-top: 5px solid #5aa620;
+}
+/* 今日鲜品卡片 */
+.category-card.reward {
+    background: linear-gradient(to bottom right, #c9eff3, #4acaca);
+}
+
+/* 鲜果溯源卡片 */
+.category-card.task {
+    background: linear-gradient(to bottom right, #ffe6c8, #e98330);
+}
+
+/* 乡野故事卡片 */
+.countryside-story {
+    background: linear-gradient(to bottom right, #faebcc, #fbe859);
+
+}
+.countryside-story:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(24, 23, 23, 0.1);/* 悬停时阴影颜色调整 */
+}
+
+.countryside-story h3 {
+    color: #556b2f; /* 橄榄绿色标题 */
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.countryside-story p {
+    color: #5d4037; /* 深棕色文字 */
+    line-height: 1.6;
+    margin-bottom: 20px;/* 段落间距 */
+}
+
+.countryside-story .read-more {
+    display: inline-block;
+    background-color: #8a9a5b;/* 橄榄绿色按钮背景 */
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-top: 10px;/* 顶部间距 */
+
+    transition: background-color 0.3s;
+}
+
+.countryside-story .read-more:hover {
+    background-color: #49611e;/* 深橄榄绿色悬停效果 */
+}
+
+/* 其他样式... */
+        
+        .category-card.reward {
+            border-top: 5px solid #4a6bff;/* 今日鲜品顶部边框色调 */
+        }
+        
+        .category-card.task {
+            border-top: 5px solid #ff7b00;/* 鲜果溯源顶部边框色调 */
+        }
+        
+        .category-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;/* 标题颜色调整 */
+        }
+        
+        .category-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            background-color: #f0f2f5;
+            color: #444;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .category-card.reward .category-btn {
+            background-color: #4a6bff;
+            color: white;
+        }
+        
+        .category-card.task .category-btn {
+            background-color: #ff7b00;
+            color: white;
+        }
+        
+        .category-btn:hover {
+            opacity: 0.9;
+        }
+
+
+
+         /* 活动卡片区域 */
+        .activities-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .activity-header {
+            background-color: #a0c58f;
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .activity-header h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .activity-count {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .activity-body {
+            padding: 25px;
+        }
+        
+        .activity-date {
+            color: #777;
+            font-size: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-date i {
+            margin-right: 8px;
+        }
+        
+        .activity-description {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+
+        /* 页脚 */
+        footer {
+            background-color: #333;
+            color: #ddd;
+            padding: 50px 0 30px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h4 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff7b00;
+            display: inline-block;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff7b00;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 34px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .category-card {
+                min-width: 100%;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-orange"></i> xiang ye you xuan
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#">需求大厅</a></li>
+                <li><a href="#">文化赋能</a></li>
+                <li><a href="#">宣传</a></li>
+                <li><a href="#">销售</a></li>
+                <li><a href="#">公益推广</a></li>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#" class="more-category">更多分类</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <!-- 标题区域 -->
+        <section class="hero">
+            <div class="container">           
+            </div>
+        </section>
+
+        <!-- 分类区域 -->
+        <div class="container">
+            <div class="categories">
+                <div class="category-card reward">
+                    <h3>今日鲜品</h3>
+                    <p>当季主推农产品</p>
+                    <button class="publish-btn" onclick="window.location.href='农产品购物平台.html'">点击进入</button>
+                </div>
+                
+                <div class="category-card task">
+                    <h3>鲜果溯源</h3>
+                    <p>体验ai识图功能</p>
+                    <button class="publish-btn" onclick="window.location.href='物联网监控系统.html'">一键即拍</button>
+                </div><!--超链接跳转到物联网监控系统页面-->
+                </div>
+            <div class="countryside-story">        
+                <h3>乡野故事</h3>        
+                <p>倾听来自田园的声音，感受乡村的温暖与宁静...</p>        
+                <a href="https://www.xinhuanet.com/food/20251010/b02266c0e7154cbead058c322f97cce7/c.html" class="read-more">阅读更多故事</a>    
+            </div>
+    <!-- 会员福利 -->
+    <div class="category-card member">
+        <h3>会员福利</h3>
+        <p>专享会员优惠特权</p>
+        <button class="category-btn" onclick="window.location.href='会员福利.html'">查看福利</button>
+    </div>
+    
+    <!-- 售后保障 -->
+    <div class="category-card after-sales">
+        <h3>售后保障</h3>
+        <p>品质保证无忧售后</p>
+        <button class="category-btn" onclick="window.location.href='售后服务.html'">查看保障</button>
+    </div>
+
+        
+            <!-- 销售活动区域 -->
+            <section class="activities-section">
+                <h2 class="section-title">销售</h2>
+                
+                <div class="activities-grid">
+                    <!-- 活动卡片1 -->
+                    <div class="activity-card">
+                        <div class="activity-header">
+                            <h3>在辽宁大学进行推广销售</h3>
+                            <div class="activity-count">100+</div>
+                        </div>
+                        <div class="activity-body">
+                            <div class="activity-date">
+                                <i class="far fa-calendar-alt"></i> 2025/6/25
+                            </div>
+                            <p class="activity-description">
+                                在辽宁大学校园内开展品牌推广与销售活动，与大学生面对面交流，提升品牌知名度。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动卡片2 -->
+                    <div class="activity-card">
+                        <div class="activity-header">
+                            <h3>在学生公寓进行产品销售</h3>
+                            <div class="activity-count">100+</div>
+                        </div>
+                        <div class="activity-body">
+                            <div class="activity-date">
+                                <i class="far fa-calendar-alt"></i> 2025/8/17
+                            </div>
+                            <p class="activity-description">
+                                深入学生公寓，开展针对性的产品展示与销售活动，直接触达目标消费群体。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动卡片3 -->
+                    <div class="activity-card">
+                        <div class="activity-header">
+                            <h3>在学校周边进行产品赠送推广活动</h3>
+                            <div class="activity-count">200+</div>
+                        </div>
+                        <div class="activity-body">
+                            <div class="activity-date">
+                                <i class="far fa-calendar-alt"></i> 2025/9/20
+                            </div>
+                            <p class="activity-description">
+                                在学校周边区域开展产品赠送活动，吸引潜在客户体验产品，扩大品牌影响力。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>关于我们</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">公司简介</a></li>
+                        <li><a href="#">品牌故事</a></li>
+                        <li><a href="#">企业文化</a></li>
+                        <li><a href="#">发展历程</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>服务项目</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">文化赋能</a></li>
+                        <li><a href="#">品牌宣传</a></li>
+                        <li><a href="#">产品销售</a></li>
+                        <li><a href="#">公益推广</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>联系我们</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">客服热线: 400-123-4567</a></li>
+                        <li><a href="#">电子邮件: xiangye@outlook.com</a></li>
+                        <li><a href="#">办公地址: 辽宁大学蒲河校区</a></li>
+                        <li><a href="#">微信公众号: xiangyeyouxuan-culture</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>关注我们</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-weibo"></i> 新浪微博</a></li>
+                        <li><a href="#"><i class="fab fa-weixin"></i> 微信公众号</a></li>
+                        <li><a href="#"><i class="fab fa-douyin"></i> 抖音账号</a></li>
+                        <li><a href="#"><i class="fab fa-bilibili"></i> Bilibili</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025-2026 XIANG YE YOU YUAN 文化推广平台 版权所有 | 京ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // 切换图标
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // 页面加载完成后添加动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为分类卡片添加延迟动画
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+                card.classList.add('animate-fade-up');
+            });
+            
+            // 为活动卡片添加延迟动画
+            const activityCards = document.querySelectorAll('.activity-card');
+            activityCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.15}s`;
+                card.classList.add('animate-fade-up');
+            });
+            
+         
+            });
+            
+            // 添加分类按钮点击效果
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.closest('.category-card').querySelector('h3').textContent;
+                    alert(`即将跳转到${category}页面`);
+                });
+            });
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .animate-fade-up {
+                animation: fadeUp 0.6s ease-out forwards;
+                opacity: 0;
+            }
+            
+            .hero h1, .hero p, .publish-btn {
+                animation: fadeUp 0.8s ease-out forwards;
+                opacity: 0;
+            }
+            
+            .hero h1 { animation-delay: 0.2s; }
+            .hero p { animation-delay: 0.5s; }
+            .publish-btn { animation-delay: 0.8s; }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
